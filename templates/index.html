@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction & Analysis</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 50px;
+            font-size: 3em;
+            text-transform: uppercase;
+            font-weight: bold;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group select {
+            padding: 14px;
+            font-size: 18px;
+            width: 300px;
+            border: 2px solid #6a11cb;
+            border-radius: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group select:focus {
+            border-color: #2575fc;
+            outline: none;
+            box-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+        }
+
+        .form-group button {
+            padding: 14px 30px;
+            font-size: 18px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .form-group button:hover {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            transform: scale(1.05);
+        }
+
+        /* Graphs Section */
+        .graphs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 40px;
+            display: none; /* Initially hide all graphs */
+        }
+
+        .graph {
+            width: 45%;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, #ffffff, #f0f4f8);
+            padding: 25px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+        }
+
+        .graph:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .graph img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Decision Section Styles */
+        .decision {
+            background: linear-gradient(120deg, #ffe259, #ffa751);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            text-align: center;
+            display: none; /* Initially hide decision */
+        }
+
+        .decision h3 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .decision p {
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+
+        /* Hour-by-Hour Prices Table */
+        .hourly-prices {
+            margin-top: 40px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hourly-prices th, .hourly-prices td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .hourly-prices th {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+        }
+
+        .hourly-prices tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .hourly-prices tr:hover {
+            background-color: #f0f0f5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-group select {
+                width: 250px;
+            }
+
+            .form-group button {
+                width: 180px;
+            }
+
+            .graphs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .graph {
+                width: 90%;
+            }
+
+            .hourly-prices {
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Stock Prediction & Analysis</h1>
+
+    <div class="container">
+        <!-- Form to Select Stock Symbol -->
+        <form id="stock-form" method="POST" action="/predict">
+            <div class="form-group">
+                <select id="stock-symbol" name="stock_symbol" required>
+                    <option value="TCS.NS">TCS.NS</option>
+                    <option value="RELIANCE.NS">RELIANCE.NS</option>
+                    <option value="INFY.NS">INFY.NS</option>
+                    <option value="ICICIBANK.NS">ICICIBANK.NS</option>
+                    <option value="MARUTI.NS">MARUTI.NS</option>
+                    <option value="HINDUNILVR.NS.NS">HINDUNILVR.NS</option>
+                    <option value="SBIN.NS">SBIN.NS</option>
+                    <option value="TATAMOTORS.NS">TATAMOTORS.NS</option>
+                    <!-- Add more stock symbols here -->
+                </select>
+                <button type="submit">Predict</button>
+            </div>
+        </form>
+
+        <!-- Graphs Section -->
+        <div class="graphs">
+            <div class="graph">
+                <h2>Historical Prices (Last 10 Hours)</h2>
+                <img id="historical-plot" src="" alt="Historical Prices">
+            </div>
+
+            <div class="graph">
+                <h2>Predicted Prices (Next 5 Hours)</h2>
+                <img id="predicted-plot" src="" alt="Predicted Prices">
+            </div>
+
+            <!-- Daily Variation Graph -->
+            <div class="graph">
+                <h2>Daily Stock Price Variation (Last 30 Days)</h2>
+                <img id="daily-plot" src="" alt="Daily Price Variation">
+            </div>
+        </div>
+
+        <!-- Hour-by-Hour Prices Table -->
+        <div id="hourly-prices-container" style="display: none;">
+            <h2>Hour-by-Hour Predicted Prices</h2>
+            <table class="hourly-prices">
+                <thead>
+                    <tr>
+                        <th>Hour</th>
+                        <th>Predicted Price (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="hourly-prices"></tbody>
+            </table>
+        </div>
+
+        <!-- Decision Section -->
+        <div class="decision">
+            <h3>Stock Decision: <span id="stock-decision"></span></h3>
+            <p>Price Change: <span id="price-change"></span>%</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const form = document.getElementById('stock-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const stockSymbol = document.getElementById('stock-symbol').value;
+            if (!stockSymbol) {
+                alert("Please select a stock symbol.");
+                return;
+            }
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: new FormData(form)
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                alert('Error: ' + data.error);
+                return;
+            }
+
+            // Set historical plot
+            document.getElementById('historical-plot').src = `data:image/png;base64,${data.historical_plot_url}`;
+
+            // Set predicted plot
+            document.getElementById('predicted-plot').src = `data:image/png;base64,${data.predicted_plot_url}`;
+
+            // Set daily variation plot
+            document.getElementById('daily-plot').src = `data:image/png;base64,${data.daily_plot_url}`;
+
+            // Set decision and price change
+            document.getElementById('stock-decision').textContent = data.decision;
+            document.getElementById('price-change').textContent = data.price_change_percentage;
+
+            // Display hourly prices in table
+            const hourlyPricesContainer = document.getElementById('hourly-prices-container');
+            const hourlyPricesTableBody = document.getElementById('hourly-prices');
+
+            // Clear previous entries
+            hourlyPricesTableBody.innerHTML = '';
+
+            // Loop through predicted prices and create table rows
+            data.predicted_prices.forEach((priceData) => {
+                const row = document.createElement('tr');
+                const hourCell = document.createElement('td');
+                hourCell.textContent = priceData.hour;
+                const priceCell = document.createElement('td');
+                priceCell.textContent = priceData.price;
+                row.appendChild(hourCell);
+                row.appendChild(priceCell);
+                hourlyPricesTableBody.appendChild(row);
+            });
+
+            // Show the graphs and decision section after data is loaded
+            document.querySelector('.graphs').style.display = 'flex'; // Show graphs
+            hourlyPricesContainer.style.display = 'block'; // Show hourly prices
+            document.querySelector('.decision').style.display = 'block'; // Show decision and price change
+        });
+    </script>
+
+</body>
+</html>

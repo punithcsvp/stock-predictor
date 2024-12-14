@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Elite</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ececec;
+            color: #444;
+            overflow-x: hidden;
+        }
+
+       
+        .header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #4e73df, #1f2a44);
+            color: #fff;
+            position: relative;
+        }
+
+        .header img {
+            width: 150px;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            background: -webkit-linear-gradient(#ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        .header p {
+            font-size: 18px;
+            max-width: 700px;
+            line-height: 1.8;
+            margin: 20px auto;
+            animation: fadeInUp 1.8s ease-out;
+        }
+
+        .header button {
+            padding: 15px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            border: none;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .header button:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        
+        .about {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #36d1dc, #5b86e5);
+            color: #fff;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            color: #fff;
+        }
+
+        .about h2::after {
+            content: "";
+            width: 60px;
+            height: 4px;
+            background: #fff;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 20px;
+            background: linear-gradient(135deg, #8a2be2, #7b68ee);
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .about h2 {
+                font-size: 28px;
+            }
+
+            .about p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <section class="header">
+        <h1>Welcome to Team Elite</h1>
+        
+        <a href="http://127.0.0.1:5000" class="learn-more-btn">
+            <button type="button">Deploy Project</button>
+        </a>
+    </section>
+
+    
+    
+</body>
+</html>
